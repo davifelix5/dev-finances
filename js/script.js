@@ -24,12 +24,14 @@ const newTrasactionBtn = document.querySelector("#transactions button");
 const modal = document.querySelector("#modal-container");
 const modalCancelBtn = document.querySelector("#modal-container button");
 const modalForm = document.querySelector("#modal-container form");
+const valueInput = modalForm.querySelector('input[name="value"]');
 
 const openModal = () => {
   modal.classList.add('show');
 }
 
 const closeModal = () => {
+  modalForm.reset();
   modal.classList.remove('show');
 }
 
@@ -41,15 +43,15 @@ function submitModal(event) {
     desc: description,
     date,
     value,
+    type,
   } = Object.fromEntries(form);
-  const isNegative = date[0] === "-";
   const numberValue = value.replace(',', '.');
 
   transactions.push({
     description,
     date,
-    value: isNegative ? Number(numberValue.split(1)) : Number(numberValue),
-    type: isNegative ? '-' : '+',
+    value: Number(numberValue),
+    type,
   });
 
   formElement.reset();
@@ -59,11 +61,41 @@ function submitModal(event) {
   fillBalace(transactions);
 }
 
+function onInputNumber() {
+  let numberInput = ''
+  function inputNumber(event) {
+    const keyPressed = event.data;
+    const keyInvalid = keyPressed && isNaN(keyPressed);
+    const input = event.target;
+
+    // Input type when backspace is pressed
+    const deleteInputType = "deleteContentBackward"
+
+    if (keyInvalid) {
+      input.value = input.value.slice(0, -1);
+      return;
+    } else if (keyPressed) {
+      numberInput += keyPressed;
+    } else if (event.inputType === deleteInputType) {
+      numberInput = numberInput.slice(0, -1);
+    }
+
+    const inputValue = numberInput.padStart(3, "0");
+    const firstDigits = inputValue.slice(0, -2)
+    const lastTwoDigits = inputValue.slice(-2)
+
+    input.value = numberInput.length ? `${firstDigits},${lastTwoDigits}` : '';
+
+  }
+
+  return inputNumber;
+}
 
 newTrasactionBtn.addEventListener('click', openModal);
 
 modalCancelBtn.addEventListener('click', closeModal);
 modalForm.addEventListener('submit', submitModal);
+valueInput.addEventListener('input', onInputNumber());
 
 
 const balanceIn = document.querySelector("#balance .in p");

@@ -23,6 +23,7 @@
 #modal {
   background: var(--background);
   
+  width: 40%;
   border-radius: 8px;
 
   padding: 1rem;
@@ -42,6 +43,20 @@
 
 #modal fieldset .control {
   margin: 0.5rem;
+}
+
+#modal fieldset .radio {
+  display: flex;
+  justify-content: space-around;
+  color: var(--title);
+}
+
+#modal fieldset .radio .group {
+  display: flex;
+}
+
+#modal fieldset .radio .group :first-child {
+  margin-right: 0.5rem;
 }
 
 #modal fieldset input {

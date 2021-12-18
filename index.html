@@ -28,7 +28,16 @@
             </div>
             <div class="control">
               <input required type="text" name="value" id="value" placeholder="0,00">
-              <small>Use o sinal - (negativo) para despesas e , (vírgula) para casas decimais</small>
+            </div>
+            <div class="control radio">
+              <div class="group">
+                <input type="radio" name="type" value="-" id="expense">
+                <label for="expense">Gasto</label>
+              </div>
+              <div class="group">
+                <input type="radio" name="type" value="+" id="gain">
+                <label for="gain">Ganho</label>
+              </div>
             </div>
             <div class="control">
               <input required type="date" name="date" id="date">
@@ -92,6 +101,5 @@
     2021 - dev.finance$
   </footer>
   <script src="/js/script.js" type="module"></script>
-  <script src="/js/modal.js" type="module"></script>
 </body>
 </html>
