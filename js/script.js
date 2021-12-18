@@ -1,23 +1,6 @@
-export const transactions = [
-  {
-    "description": "Luz",
-    "value": 800,
-    "type": "-",
-    "date": "2021-01-23"
-  },
-  {
-    "description": "Criação de Website",
-    "value": 56000,
-    "type": "+",
-    "date": "2021-01-24"
-  },
-  {
-    "description": "Aluguel",
-    "value": 5000,
-    "type": "-",
-    "date": "2021-01-28"
-  }
-];
+const TRANSACTIONS = "transactions"
+
+export const transactions = JSON.parse(localStorage.getItem(TRANSACTIONS)) || [];
 
 const newTrasactionBtn = document.querySelector("#transactions button");
 
@@ -54,11 +37,13 @@ function submitModal(event) {
     type,
   });
 
+  localStorage.setItem(TRANSACTIONS, JSON.stringify(transactions))
+
   formElement.reset();
   closeModal();
 
   populateTable(transactionsTable, transactions);
-  fillBalace(transactions);
+  fillBalace();
 }
 
 function onInputNumber() {
@@ -122,7 +107,7 @@ function getBalanceValue(type) {
   return value
 }
 
-function fillBalace(transactions = []) {
+function fillBalace() {
   const outValue = getBalanceValue("-")
   const inValue = getBalanceValue("+")
   const totalValue = inValue - outValue;
@@ -178,4 +163,4 @@ function populateTable(transactionsTable, transactions) {
 }
 
 populateTable(transactionsTable, transactions);
-fillBalace(transactions)
+fillBalace();
