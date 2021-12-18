@@ -52,9 +52,18 @@ header {
   background: var(--main-shape);
 }
 
-#balance li:last-child {
-  background: var(--green);
+#balance li:last-child,
+#balance li:last-child p {
   color: var(--main-shape);
+}
+
+#balance li.negative {
+  background: var(--red);
+}
+
+#balance li.positive {
+  background: var(--green);
+
 }
 
 #balance li .card-title {
@@ -77,10 +86,6 @@ header {
 
 #balance li .card-content p span {
   font-weight: 600;
-}
-
-#balance li:last-child .card-content {
-  color: var(--main-shape);
 }
 
 #transactions button {
