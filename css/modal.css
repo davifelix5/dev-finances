@@ -1,0 +1,103 @@
+#modal-container {
+  position: fixed;
+  right: 0;
+  top: 0;
+  
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(0,0,0,0.5);
+
+  visibility: hidden;
+}
+
+#modal-container.show {
+  visibility: visible;
+}
+
+
+#modal {
+  background: var(--background);
+  
+  border-radius: 8px;
+
+  padding: 1rem;
+
+  z-index: 2;
+}
+
+#modal form {
+  padding: 1rem;
+}
+
+#modal fieldset {
+  display: flex;
+  flex-direction: column;
+  border: none;
+}
+
+#modal fieldset .control {
+  margin: 0.5rem;
+}
+
+#modal fieldset input {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 4px;
+  
+  color: var(--title);
+}
+
+#modal fieldset input:focus {
+  outline: 1px solid var(--dark-green);
+}
+
+#modal fieldset input + small {
+  font-family: 'Poppins', sans-serif;
+  margin-top: 0.3rem;
+}
+
+#modal fieldset legend {
+  color: var(--title);
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+#modal .control small {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text);
+}
+
+#modal .buttons {
+  display: flex;
+  width: 100%;
+}
+
+#modal .buttons button {
+  padding: 0.8rem;
+  margin: 1rem 1rem 0;
+  width: 50%;
+  font-weight: 500;
+  border-radius: 4px;
+  transition: opacity 0.5s;
+}
+
+#modal .buttons button:hover {
+  opacity: 0.6;
+}
+
+#modal .buttons button:first-child {
+  border: 1px solid var(--red);
+  color: var(--red);
+}
+
+
+#modal .buttons button[type="submit"] {
+  color: var(--main-shape);
+  background: var(--green);
+}

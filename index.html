@@ -4,12 +4,13 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,700;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/reset.css">
   <link rel="stylesheet" href="/css/colors.css">
   <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/modal.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,700;1,600&display=swap" rel="stylesheet">
   <title>Dev Finances</title>
 </head>
 <body>
@@ -17,6 +18,29 @@
     <img src="/assets/img/logo.svg" alt="dev.finance$">
   </header>
   <main>
+    <div id="modal-container">
+      <div id="modal">
+        <form action="#">
+          <fieldset>
+            <legend>Nova Transação</legend>
+            <div class="control">
+              <input type="text" name="desc" id="desc" placeholder="Descrição">
+            </div>
+            <div class="control">
+              <input type="text" name="value" id="value" placeholder="0,00">
+              <small>Use o sinal - (negativo) para despesas e , (vírgula) para casas decimais</small>
+            </div>
+            <div class="control">
+              <input type="date" name="date" id="date">
+            </div>
+          </fieldset>
+          <div class="buttons">
+            <button type="button">Cancelar</button>
+            <button type="submit">Enviar</button>
+          </div>
+        </form>      
+      </div>
+    </div>
     <section id="balance">
       <h2 style="display: none;">Balanço</h2>
       <ul>
@@ -83,5 +107,8 @@
   <footer>
     2021 - dev.finance$
   </footer>
+  <script src="/js/transations.js" type="module"></script>
+  <script src="/js/script.js" type="module"></script>
+  <script src="/js/modal.js" type="module"></script>
 </body>
 </html>
