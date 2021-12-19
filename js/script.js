@@ -143,6 +143,7 @@ function createTransactionsItem(expense) {
  
   const dateTd = document.createElement('td')
   const [year, month, day] = date.split('-');
+  dateTd.classList.add('date');
   dateTd.innerText = `${day}/${month}/${year}`;
   
   valueTd.classList.add(valueClass);

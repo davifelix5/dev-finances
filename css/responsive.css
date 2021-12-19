@@ -1,0 +1,33 @@
+@media (max-width: 900px) {
+  main {
+    width: 90%;
+    margin: -3rem auto 0;
+  }
+}
+
+@media (max-width: 550px) {
+  #balance ul {
+    flex-direction: column;
+  }
+
+  #balance li {
+    width: 100%;
+  }
+
+  #balance ul li + li {
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 670px) {
+  #modal {
+    width: 95%;
+  }
+}
+
+@media (max-width: 335px) {
+  #transactions table td.date,
+  #transactions table th.date {
+    display: none;
+  }
+}
