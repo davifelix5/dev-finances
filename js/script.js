@@ -46,41 +46,31 @@ function submitModal(event) {
   fillBalace();
 }
 
-function onInputNumber() {
-  let numberInput = ''
-  function inputNumber(event) {
-    const keyPressed = event.data;
-    const keyInvalid = keyPressed && isNaN(keyPressed);
-    const input = event.target;
+function inputNumber(event) {
+  const keyPressed = event.data;
+  const keyInvalid = keyPressed && isNaN(keyPressed);
+  const input = event.target;
 
-    // Input type when backspace is pressed
-    const deleteInputType = "deleteContentBackward"
-
-    if (keyInvalid) {
-      input.value = input.value.slice(0, -1);
-      return;
-    } else if (keyPressed) {
-      numberInput += keyPressed;
-    } else if (event.inputType === deleteInputType) {
-      numberInput = numberInput.slice(0, -1);
-    }
-
-    const inputValue = numberInput.padStart(3, "0");
-    const firstDigits = inputValue.slice(0, -2)
-    const lastTwoDigits = inputValue.slice(-2)
-
-    input.value = numberInput.length ? `${firstDigits},${lastTwoDigits}` : '';
-
+  if (keyInvalid) {
+    input.value = input.value.slice(0, -1);
+    return;
   }
 
-  return inputNumber;
+  const numberValue = input.value.replace(/\D/g, '');
+  const validNumberValue = numberValue.replace(/^(0+)/g, '');
+
+  const filledValue = validNumberValue.padStart(3, '0');
+  const start = filledValue.slice(0, -2);
+  const lastTwoDigits = filledValue.slice(-2);
+
+  input.value = `${start},${lastTwoDigits}`;
 }
 
 newTrasactionBtn.addEventListener('click', openModal);
 
 modalCancelBtn.addEventListener('click', closeModal);
 modalForm.addEventListener('submit', submitModal);
-valueInput.addEventListener('input', onInputNumber());
+valueInput.addEventListener('input', inputNumber);
 
 
 const balanceIn = document.querySelector("#balance .in p");
