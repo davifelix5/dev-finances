@@ -142,6 +142,10 @@ function createTransactionsItem(expense) {
 }
 
 function removeTask(description) {
+  const userConfirms = window.confirm('Você realmente deseja remover esta transação?');
+  if (!userConfirms) {
+    return
+  }
   const transactions = getTransactions()
     .filter(t => t.description !== description)
   console.log(transactions);
