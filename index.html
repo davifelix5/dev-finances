@@ -21,42 +21,42 @@
   <header>
     <img src="./assets/img/logo.svg" alt="dev.finance$">
   </header>
-  <main>
-    <div id="modal-container">
-      <div id="modal">
-        <form action="#">
-          <fieldset>
-            <legend>Nova Transação</legend>
-            <div class="control">
-              <label for="desc">Descrição</label>
-              <input required type="text" name="desc" id="desc" placeholder="Descrição">
-            </div>
-            <div class="control">
-              <label for="value">Valor (R$)</label>
-              <input required type="text" name="value" id="value" placeholder="0,00">
-            </div>
-            <div class="control radio">
-              <div class="group">
-                <input checked type="radio" name="type" value="+" id="gain">
-                <label for="gain">Ganho</label>
-              </div>
-              <div class="group">
-                <input type="radio" name="type" value="-" id="expense">
-                <label for="expense">Gasto</label>
-              </div>
-            </div>
-            <div class="control">
-              <label for="date">Data da transação</label>
-              <input required type="date" name="date" id="date" placeholder="Selecione a data">
-            </div>
-          </fieldset>
-          <div class="buttons">
-            <button type="button">Cancelar</button>
-            <button type="submit">Enviar</button>
+  <div id="modal-container" aria-hidden="true">
+    <div id="modal">
+      <form action="#">
+        <fieldset>
+          <legend>Nova Transação</legend>
+          <div class="control">
+            <label for="desc">Descrição</label>
+            <input required type="text" name="desc" id="desc" placeholder="Descrição">
           </div>
-        </form>
-      </div>
+          <div class="control">
+            <label for="value">Valor (R$)</label>
+            <input required type="text" name="value" id="value" placeholder="0,00">
+          </div>
+          <div class="control radio">
+            <div class="group">
+              <input checked type="radio" name="type" value="+" id="gain">
+              <label for="gain">Ganho</label>
+            </div>
+            <div class="group">
+              <input type="radio" name="type" value="-" id="expense">
+              <label for="expense">Gasto</label>
+            </div>
+          </div>
+          <div class="control">
+            <label for="date">Data da transação</label>
+            <input required type="date" name="date" id="date" placeholder="Selecione a data">
+          </div>
+        </fieldset>
+        <div class="buttons">
+          <button type="button">Cancelar</button>
+          <button type="submit">Enviar</button>
+        </div>
+      </form>
     </div>
+  </div>
+  <main aria-hidden="false">
     <section id="balance">
       <h2 style="display: none;">Balanço</h2>
       <ul>
@@ -91,7 +91,7 @@
     </section>
     <section id="transactions">
       <h2 style="display: none;">Transações</h2>
-      <button>+ Nova Transação</button>
+      <button tabindex="1">+ Nova Transação</button>
       <table>
         <thead>
           <tr>

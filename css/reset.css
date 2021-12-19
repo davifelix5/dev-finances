@@ -22,3 +22,7 @@ button {
   border: none;
   cursor: pointer;
 }
+
+button:focus {
+  outline: 2px solid var(--dark-green);
+}

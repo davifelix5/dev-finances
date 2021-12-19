@@ -105,16 +105,6 @@ header {
   border-spacing: 0 0.5rem;
 }
 
-#transactions table td {
-  padding: 1rem;
-}
-
-#transactions table td:first-child {
-  overflow: hidden;
-  text-overflow: clip ellipsis;
-  max-width: 0.8rem;
-}
-
 #transactions table th {
   text-align: start;
   
@@ -129,6 +119,16 @@ header {
   background-color: var(--main-shape);
 }
 
+#transactions table tbody tr td {
+  padding: 1rem;
+}
+
+#transactions table td:first-child {
+  overflow: hidden;
+  text-overflow: clip ellipsis;
+  max-width: 0.8rem;
+}
+
 #transactions table tbody tr td:nth-child(3) {
   color: var(--text);
 }
@@ -139,6 +139,10 @@ header {
 
 #transactions table tbody tr td:last-child img:hover {
   opacity: 0.6;
+}
+
+#transactions table tbody tr td button:focus {
+  outline: 2px solid var(--red);
 }
 
 #transactions table tbody tr + tr {

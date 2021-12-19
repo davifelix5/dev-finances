@@ -1,12 +1,40 @@
 const TRANSACTIONS = "transactions"
 
 const openModal = (modal) => {
+  const main = document.querySelector("main")
+  const firstInput = modal.querySelector("input");
+
   modal.classList.add('show');
+  main.ariaHidden = true;
+  modal.ariaHidden = false;
+
+  firstInput.focus();
+
+  const onKeyPress = event => {
+    const escKeyCode = "Escape";
+    if (event.key === escKeyCode) {
+      document.removeEventListener('keydown', onKeyPress);
+      closeModal(modal);
+    }
+  }
+
+  document.addEventListener('keydown', onKeyPress)
 }
 
-const closeModal = (modal, modalForm) => {
+const closeModal = (modal) => {
+  const main = document.querySelector("main");
+  const modalForm = modal.querySelector("form");
+
   modalForm.reset();
   modal.classList.remove('show');
+  main.ariaHidden = false;
+  modal.ariaHidden = true;
+
+  const somethindActiveInsideModal = modal.contains(document.activeElement)
+
+  if (somethindActiveInsideModal) {
+    document.activeElement.blur()
+  }
 }
 
 const getTransactions = () => {
@@ -125,11 +153,13 @@ function createTransactionsItem(expense) {
 
   const imageTd = document.createElement('td');
   const image = document.createElement('img');
+  const btn = document.createElement('button');
   image.src = './assets/img/trash.svg';
   image.alt = 'Exluir';
-  imageTd.appendChild(image);
+  btn.appendChild(image);
+  imageTd.appendChild(btn);
 
-  image.addEventListener('click', () => removeTask(description));
+  btn.addEventListener('click', () => removeTask(description));
   
   valueTd.classList.add(valueClass);
   tr.appendChild(descriptionTd);
@@ -174,14 +204,16 @@ window.addEventListener('load', () => {
 
   newTrasactionBtn.addEventListener('click', () => openModal(modal));
 
-  modalCancelBtn.addEventListener('click', () => closeModal(modal, modalForm));
+  modalCancelBtn.addEventListener('click', () => closeModal(modal));
+
   modalForm.addEventListener('submit', (event) => {
     event.preventDefault()
     submitModal();
-    closeModal(modal, modalForm);
+    closeModal(modal);
     populateTable();
     fillBalace();
   });
+
   valueInput.addEventListener('input', inputNumber);
 
   populateTable();
