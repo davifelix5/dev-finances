@@ -1,26 +1,23 @@
 const TRANSACTIONS = "transactions"
 
-let transactions = JSON.parse(localStorage.getItem(TRANSACTIONS)) || [];
-
-const newTrasactionBtn = document.querySelector("#transactions button");
-
-const modal = document.querySelector("#modal-container");
-const modalCancelBtn = document.querySelector("#modal-container button");
-const modalForm = document.querySelector("#modal-container form");
-const valueInput = modalForm.querySelector('input[name="value"]');
-
-const openModal = () => {
+const openModal = (modal) => {
   modal.classList.add('show');
 }
 
-const closeModal = () => {
+const closeModal = (modal, modalForm) => {
   modalForm.reset();
   modal.classList.remove('show');
 }
 
-function submitModal(event) {
-  event.preventDefault();
-  const formElement = event.target;
+const getTransactions = () => {
+  return JSON.parse(localStorage.getItem(TRANSACTIONS)) || []
+}
+
+const setTransactions = (transactions) => {
+  localStorage.setItem(TRANSACTIONS, JSON.stringify(transactions))
+}
+
+function submitModal() {
   const form = new FormData(event.target);
   const {
     desc: description,
@@ -30,6 +27,8 @@ function submitModal(event) {
   } = Object.fromEntries(form);
   const numberValue = value.replace(',', '.');
 
+  const transactions = getTransactions()
+
   transactions.push({
     description,
     date,
@@ -37,13 +36,7 @@ function submitModal(event) {
     type,
   });
 
-  localStorage.setItem(TRANSACTIONS, JSON.stringify(transactions))
-
-  formElement.reset();
-  closeModal();
-
-  populateTable(transactionsTable, transactions);
-  fillBalace();
+  setTransactions(transactions)
 }
 
 function inputNumber(event) {
@@ -66,20 +59,6 @@ function inputNumber(event) {
   input.value = `${start},${lastTwoDigits}`;
 }
 
-newTrasactionBtn.addEventListener('click', openModal);
-
-modalCancelBtn.addEventListener('click', closeModal);
-modalForm.addEventListener('submit', submitModal);
-valueInput.addEventListener('input', inputNumber);
-
-
-const balanceIn = document.querySelector("#balance .in p");
-const balanceOut = document.querySelector("#balance .out p");
-const balanceTotal = document.querySelector("#balance .total p");
-const totalContainer = document.querySelector("#balance li:last-child")
-
-const transactionsTable = document.querySelector("#transactions table");
-
 function formatMoneyValue(value) {
   const number = Number(value);
   return `${number.toLocaleString("pt-BR", {
@@ -90,6 +69,7 @@ function formatMoneyValue(value) {
 }
 
 function getBalanceValue(type) {
+  const transactions = getTransactions();
   const value = transactions.reduce((acc, item ) => {
     const newAcc = (item.type ===type) ? acc + item.value : acc;
     return newAcc;
@@ -98,6 +78,11 @@ function getBalanceValue(type) {
 }
 
 function fillBalace() {
+  const balanceIn = document.querySelector("#balance .in p");
+  const balanceOut = document.querySelector("#balance .out p");
+  const balanceTotal = document.querySelector("#balance .total p");
+  const totalContainer = document.querySelector("#balance li:last-child")
+
   const outValue = getBalanceValue("-")
   const inValue = getBalanceValue("+")
   const totalValue = inValue - outValue;
@@ -157,13 +142,17 @@ function createTransactionsItem(expense) {
 }
 
 function removeTask(description) {
-  transactions = transactions.filter(t => t.description !== description);
-  populateTable(transactionsTable, transactions);
+  const transactions = getTransactions()
+    .filter(t => t.description !== description)
+  console.log(transactions);
+  setTransactions(transactions)
+  populateTable();
   fillBalace()
-  localStorage.setItem(TRANSACTIONS, JSON.stringify(transactions));
 }
 
-function populateTable(transactionsTable, transactions) {
+function populateTable() {
+  const transactionsTable = document.querySelector("#transactions table");
+  const transactions = getTransactions()
   const transactionElements = transactions.map(createTransactionsItem)
   const tableBody = transactionsTable.querySelector('tbody');
   tableBody.innerHTML = '';
@@ -171,5 +160,27 @@ function populateTable(transactionsTable, transactions) {
   transactionsTable.appendChild(tableBody);
 }
 
-populateTable(transactionsTable, transactions);
-fillBalace();
+window.addEventListener('load', () => {
+  const newTrasactionBtn = document.querySelector("#transactions button");
+
+  const modal = document.querySelector("#modal-container");
+  const modalCancelBtn = document.querySelector("#modal-container button");
+  const modalForm = document.querySelector("#modal-container form");
+  const valueInput = modalForm.querySelector('input[name="value"]');
+
+  newTrasactionBtn.addEventListener('click', () => openModal(modal));
+
+  modalCancelBtn.addEventListener('click', () => closeModal(modal, modalForm));
+  modalForm.addEventListener('submit', (event) => {
+    event.preventDefault()
+    submitModal();
+    closeModal(modal, modalForm);
+    populateTable();
+    fillBalace();
+  });
+  valueInput.addEventListener('input', inputNumber);
+
+  populateTable();
+  fillBalace();
+})
+
