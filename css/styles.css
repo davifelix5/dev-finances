@@ -52,6 +52,10 @@ header {
   background: var(--main-shape);
 }
 
+#balance li:last-child {
+  background: var(--green);
+}
+
 #balance li:last-child,
 #balance li:last-child p {
   color: var(--main-shape);
@@ -59,11 +63,6 @@ header {
 
 #balance li.negative {
   background: var(--red);
-}
-
-#balance li.positive {
-  background: var(--green);
-
 }
 
 #balance li .card-title {
@@ -108,6 +107,12 @@ header {
 
 #transactions table td {
   padding: 1rem;
+}
+
+#transactions table td:first-child {
+  overflow: hidden;
+  text-overflow: clip ellipsis;
+  max-width: 0.8rem;
 }
 
 #transactions table th {

@@ -114,7 +114,9 @@ function fillBalace() {
 
   if (totalValue < 0) {
     totalContainer.classList.add('negative')
+    totalContainer.classList.remove('positive')
   } else {
+    totalContainer.classList.remove('negative')
     totalContainer.classList.add('positive')
   }
 
