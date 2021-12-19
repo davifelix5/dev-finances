@@ -1,6 +1,6 @@
 const TRANSACTIONS = "transactions"
 
-export const transactions = JSON.parse(localStorage.getItem(TRANSACTIONS)) || [];
+let transactions = JSON.parse(localStorage.getItem(TRANSACTIONS)) || [];
 
 const newTrasactionBtn = document.querySelector("#transactions button");
 
@@ -137,14 +137,30 @@ function createTransactionsItem(expense) {
   const [year, month, day] = date.split('-');
   dateTd.classList.add('date');
   dateTd.innerText = `${day}/${month}/${year}`;
+
+  const imageTd = document.createElement('td');
+  const image = document.createElement('img');
+  image.src = './assets/img/trash.svg';
+  image.alt = 'Exluir';
+  imageTd.appendChild(image);
+
+  image.addEventListener('click', () => removeTask(description));
   
   valueTd.classList.add(valueClass);
   tr.appendChild(descriptionTd);
   tr.appendChild(valueTd);
   tr.appendChild(dateTd);
+  tr.appendChild(imageTd);
 
   return tr;
 
+}
+
+function removeTask(description) {
+  transactions = transactions.filter(t => t.description !== description);
+  populateTable(transactionsTable, transactions);
+  fillBalace()
+  localStorage.setItem(TRANSACTIONS, JSON.stringify(transactions));
 }
 
 function populateTable(transactionsTable, transactions) {

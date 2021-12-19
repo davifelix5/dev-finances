@@ -25,7 +25,7 @@
   }
 }
 
-@media (max-width: 335px) {
+@media (max-width: 480px) {
   #transactions table td.date,
   #transactions table th.date {
     display: none;

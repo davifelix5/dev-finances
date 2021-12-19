@@ -129,8 +129,16 @@ header {
   background-color: var(--main-shape);
 }
 
-#transactions table tbody tr td:last-child {
+#transactions table tbody tr td:nth-child(3) {
   color: var(--text);
+}
+
+#transactions table tbody tr td:last-child img {
+  cursor: pointer;
+}
+
+#transactions table tbody tr td:last-child img:hover {
+  opacity: 0.6;
 }
 
 #transactions table tbody tr + tr {
