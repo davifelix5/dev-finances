@@ -83,10 +83,6 @@ header {
   font-size: 1.3rem;
 }
 
-#balance li .card-content p span {
-  font-weight: 600;
-}
-
 #transactions button {
   margin-bottom: 8px;
 
