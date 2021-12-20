@@ -1,7 +1,8 @@
-const TRANSACTIONS = "transactions"
+const TRANSACTIONS = "transactions";
 
-const openModal = (modal) => {
-  const main = document.querySelector("main")
+const openModal = () => {
+  const modal = document.querySelector("#modal-container");
+  const main = document.querySelector("main");
   const firstInput = modal.querySelector("input");
 
   modal.classList.add('show');
@@ -14,14 +15,15 @@ const openModal = (modal) => {
     const escKeyCode = "Escape";
     if (event.key === escKeyCode) {
       document.removeEventListener('keydown', onKeyPress);
-      closeModal(modal);
+      closeModal();
     }
   }
 
-  document.addEventListener('keydown', onKeyPress)
+  document.addEventListener('keydown', onKeyPress);
 }
 
-const closeModal = (modal) => {
+const closeModal = () => {
+  const modal = document.querySelector("#modal-container")
   const main = document.querySelector("main");
   const modalForm = modal.querySelector("form");
 
@@ -30,23 +32,23 @@ const closeModal = (modal) => {
   main.ariaHidden = false;
   modal.ariaHidden = true;
 
-  const somethindActiveInsideModal = modal.contains(document.activeElement)
+  const somethindActiveInsideModal = modal.contains(document.activeElement);
 
   if (somethindActiveInsideModal) {
-    document.activeElement.blur()
+    document.activeElement.blur();
   }
 }
 
 const getTransactions = () => {
-  return JSON.parse(localStorage.getItem(TRANSACTIONS)) || []
+  return JSON.parse(localStorage.getItem(TRANSACTIONS)) || [];
 }
 
 const setTransactions = (transactions) => {
-  localStorage.setItem(TRANSACTIONS, JSON.stringify(transactions))
+  localStorage.setItem(TRANSACTIONS, JSON.stringify(transactions));
 }
 
-function submitModal() {
-  const form = new FormData(event.target);
+function submitModal(formElement) {
+  const form = new FormData(formElement);
   const {
     desc: description,
     date,
@@ -55,7 +57,7 @@ function submitModal() {
   } = Object.fromEntries(form);
   const numberValue = value.replace(',', '.');
 
-  const transactions = getTransactions()
+  const transactions = getTransactions();
 
   transactions.push({
     description,
@@ -64,7 +66,7 @@ function submitModal() {
     type,
   });
 
-  setTransactions(transactions)
+  setTransactions(transactions);
 }
 
 function inputNumber(event) {
@@ -102,25 +104,25 @@ function getBalanceValue(type) {
     const newAcc = (item.type ===type) ? acc + item.value : acc;
     return newAcc;
   }, 0);
-  return value
+  return value;
 }
 
 function fillBalace() {
   const balanceIn = document.querySelector("#balance .in p");
   const balanceOut = document.querySelector("#balance .out p");
   const balanceTotal = document.querySelector("#balance .total p");
-  const totalContainer = document.querySelector("#balance li:last-child")
+  const totalContainer = document.querySelector("#balance li:last-child");
 
-  const outValue = getBalanceValue("-")
-  const inValue = getBalanceValue("+")
+  const outValue = getBalanceValue("-");
+  const inValue = getBalanceValue("+");
   const totalValue = inValue - outValue;
 
   if (totalValue < 0) {
-    totalContainer.classList.add('negative')
-    totalContainer.classList.remove('positive')
+    totalContainer.classList.add('negative');
+    totalContainer.classList.remove('positive');
   } else {
-    totalContainer.classList.remove('negative')
-    totalContainer.classList.add('positive')
+    totalContainer.classList.remove('negative');
+    totalContainer.classList.add('positive');
   }
 
   balanceIn.innerHTML = formatMoneyValue(inValue);
@@ -138,7 +140,7 @@ function createTransactionsItem(expense) {
 
   const tr = document.createElement('tr');
 
-  const descriptionTd = document.createElement('td')
+  const descriptionTd = document.createElement('td');
   descriptionTd.innerText = description;
 
   const valueTd = document.createElement('td')
@@ -174,42 +176,44 @@ function createTransactionsItem(expense) {
 function removeTask(description) {
   const userConfirms = window.confirm('Você realmente deseja remover esta transação?');
   if (!userConfirms) {
-    return
+    return;
   }
   const transactions = getTransactions()
-    .filter(t => t.description !== description)
+    .filter(t => t.description !== description);
   console.log(transactions);
-  setTransactions(transactions)
+  setTransactions(transactions);
   populateTable();
-  fillBalace()
+  fillBalace();
 }
 
 function populateTable() {
   const transactionsTable = document.querySelector("#transactions table");
-  const transactions = getTransactions()
-  const transactionElements = transactions.map(createTransactionsItem)
+  const transactions = getTransactions();
+  const transactionElements = transactions.map(createTransactionsItem);
+  
   const tableBody = transactionsTable.querySelector('tbody');
   tableBody.innerHTML = '';
-  transactionElements.forEach(element => tableBody.appendChild(element))
+  
+  transactionElements.forEach(element => tableBody.appendChild(element));
+  
   transactionsTable.appendChild(tableBody);
 }
 
 window.addEventListener('load', () => {
   const newTrasactionBtn = document.querySelector("#transactions button");
 
-  const modal = document.querySelector("#modal-container");
   const modalCancelBtn = document.querySelector("#modal-container button");
   const modalForm = document.querySelector("#modal-container form");
   const valueInput = modalForm.querySelector('input[name="value"]');
 
-  newTrasactionBtn.addEventListener('click', () => openModal(modal));
+  newTrasactionBtn.addEventListener('click', () => openModal());
 
-  modalCancelBtn.addEventListener('click', () => closeModal(modal));
+  modalCancelBtn.addEventListener('click', () => closeModal());
 
   modalForm.addEventListener('submit', (event) => {
     event.preventDefault()
-    submitModal();
-    closeModal(modal);
+    submitModal(event.target);
+    closeModal();
     populateTable();
     fillBalace();
   });
