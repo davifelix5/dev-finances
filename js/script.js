@@ -10,16 +10,6 @@ const openModal = () => {
   modal.ariaHidden = false;
 
   firstInput.focus();
-
-  const onKeyPress = event => {
-    const escKeyCode = "Escape";
-    if (event.key === escKeyCode) {
-      document.removeEventListener('keydown', onKeyPress);
-      closeModal();
-    }
-  }
-
-  document.addEventListener('keydown', onKeyPress);
 }
 
 const closeModal = () => {
@@ -222,5 +212,4 @@ window.addEventListener('load', () => {
 
   populateTable();
   fillBalace();
-})
-
+});
